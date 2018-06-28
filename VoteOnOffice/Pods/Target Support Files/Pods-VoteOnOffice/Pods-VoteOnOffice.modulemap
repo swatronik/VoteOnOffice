@@ -1,0 +1,6 @@
+framework module Pods_VoteOnOffice {
+  umbrella header "Pods-VoteOnOffice-umbrella.h"
+
+  export *
+  module * { export * }
+}
