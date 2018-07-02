@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		160823F8B1539A74FAF7AEB4 /* Pods_VoteOnOfficeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EE17C5FCC6C8DBCD58EC353 /* Pods_VoteOnOfficeTests.framework */; };
 		2ED4AD048DA60B003C2F9C97 /* Pods_VoteOnOffice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFCD9F303F749859C6F887E1 /* Pods_VoteOnOffice.framework */; };
+		8415DF8D20EA0F4300AA1284 /* DataVoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8415DF8C20EA0F4300AA1284 /* DataVoteCell.swift */; };
+		8440EC3E20E61A79006AD703 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8440EC3D20E61A78006AD703 /* AppDelegate.swift */; };
+		8440EC4020E63FD8006AD703 /* MyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8440EC3F20E63FD8006AD703 /* MyCell.swift */; };
 		845176F220E36591001855CD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845176F120E36591001855CD /* ViewController.swift */; };
 		845176F720E36593001855CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 845176F620E36593001855CD /* Assets.xcassets */; };
 		845176FA20E36593001855CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 845176F820E36593001855CD /* LaunchScreen.storyboard */; };
 		8451770520E36593001855CD /* VoteOnOfficeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451770420E36593001855CD /* VoteOnOfficeTests.swift */; };
 		8451771320E36693001855CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8451771220E36693001855CD /* Main.storyboard */; };
-		8451771E20E367DF001855CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451771D20E367DF001855CD /* AppDelegate.swift */; };
 		8451772320E36A87001855CD /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451772220E36A87001855CD /* FirstView.swift */; };
 		8451772520E36A90001855CD /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451772420E36A90001855CD /* SignInView.swift */; };
 		8451772720E36A98001855CD /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8451772620E36A98001855CD /* SignUpView.swift */; };
@@ -39,6 +41,9 @@
 		4F3517DE77089C817A49AB99 /* Pods-VoteOnOffice.internal.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoteOnOffice.internal.xcconfig"; path = "Pods/Target Support Files/Pods-VoteOnOffice/Pods-VoteOnOffice.internal.xcconfig"; sourceTree = "<group>"; };
 		53E50A681E0E4C5902307D46 /* Pods-VoteOnOffice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoteOnOffice.release.xcconfig"; path = "Pods/Target Support Files/Pods-VoteOnOffice/Pods-VoteOnOffice.release.xcconfig"; sourceTree = "<group>"; };
 		82D158F6C7FBBC34FEFB1757 /* Pods-VoteOnOffice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoteOnOffice.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VoteOnOffice/Pods-VoteOnOffice.debug.xcconfig"; sourceTree = "<group>"; };
+		8415DF8C20EA0F4300AA1284 /* DataVoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataVoteCell.swift; sourceTree = "<group>"; };
+		8440EC3D20E61A78006AD703 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8440EC3F20E63FD8006AD703 /* MyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCell.swift; sourceTree = "<group>"; };
 		845176EC20E36591001855CD /* VoteOnOffice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoteOnOffice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		845176F120E36591001855CD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		845176F620E36593001855CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -48,8 +53,6 @@
 		8451770420E36593001855CD /* VoteOnOfficeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteOnOfficeTests.swift; sourceTree = "<group>"; };
 		8451770620E36593001855CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8451771220E36693001855CD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		8451771A20E366D8001855CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8451771D20E367DF001855CD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = ../../VoteApp/VoteApp/Classes/Bisiness/AppDelegate.swift; sourceTree = "<group>"; };
 		8451772220E36A87001855CD /* FirstView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		8451772420E36A90001855CD /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		8451772620E36A98001855CD /* SignUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -114,7 +117,7 @@
 		845176EE20E36591001855CD /* VoteOnOffice */ = {
 			isa = PBXGroup;
 			children = (
-				8451771D20E367DF001855CD /* AppDelegate.swift */,
+				8440EC3D20E61A78006AD703 /* AppDelegate.swift */,
 				845176F120E36591001855CD /* ViewController.swift */,
 				845176F620E36593001855CD /* Assets.xcassets */,
 				8451771B20E366EE001855CD /* Classes */,
@@ -135,7 +138,6 @@
 		8451771620E366D8001855CD /* Bisiness */ = {
 			isa = PBXGroup;
 			children = (
-				8451771A20E366D8001855CD /* AppDelegate.swift */,
 				84CE638A20E4B38A0017029D /* ReadDataBase.swift */,
 			);
 			path = Bisiness;
@@ -167,6 +169,8 @@
 				8451772620E36A98001855CD /* SignUpView.swift */,
 				8451772220E36A87001855CD /* FirstView.swift */,
 				8480937B20E397D00042569F /* MainView.swift */,
+				8440EC3F20E63FD8006AD703 /* MyCell.swift */,
+				8415DF8C20EA0F4300AA1284 /* DataVoteCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -331,14 +335,28 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-VoteOnOfficeTests/Pods-VoteOnOfficeTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,14 +371,28 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-VoteOnOffice/Pods-VoteOnOffice-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,11 +443,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8451771E20E367DF001855CD /* AppDelegate.swift in Sources */,
 				8480937C20E397D00042569F /* MainView.swift in Sources */,
 				8451772720E36A98001855CD /* SignUpView.swift in Sources */,
 				8451772320E36A87001855CD /* FirstView.swift in Sources */,
+				8440EC3E20E61A79006AD703 /* AppDelegate.swift in Sources */,
+				8415DF8D20EA0F4300AA1284 /* DataVoteCell.swift in Sources */,
 				84CE638B20E4B38A0017029D /* ReadDataBase.swift in Sources */,
+				8440EC4020E63FD8006AD703 /* MyCell.swift in Sources */,
 				8451772520E36A90001855CD /* SignInView.swift in Sources */,
 				845176F220E36591001855CD /* ViewController.swift in Sources */,
 			);

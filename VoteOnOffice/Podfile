@@ -9,12 +9,14 @@ target 'VoteOnOffice' do
 pod 'Firebase', '>= 2.5.0'
 pod 'FirebaseUI/Auth'
 pod 'Firebase/Storage'
+pod 'Firebase/Firestore'
   target 'VoteOnOfficeTests' do
     inherit! :search_paths
     # Pods for testing
 pod 'Firebase', '>= 2.5.0'
 pod 'FirebaseUI/Auth'
 pod 'Firebase/Storage'
+pod 'Firebase/Firestore'
   end
 
 end

@@ -7,10 +7,27 @@
 //
 
 import Foundation
-import FirebaseStorage
+import FirebaseFirestore
+import FirebaseAuth
 
 class ReadDataBase{
-    var db = Storage.init
+
+    
+    func readDataBase()->Void{
+        let db = Firestore.firestore()
+        db.collection("Votes").getDocuments{(snapshot,error) in
+            if error != nil {print(error)}
+            else{
+                for documents in (snapshot?.documents)!{
+                    let value: String = (documents.data()["voteTitle"]as?String)!
+                    //self.items.append(value)
+                    print(value)
+                    //self.upload()
+                }
+            }
+        }
+        print((Auth.auth().currentUser?.email)!)
+    }
     
     
 }
