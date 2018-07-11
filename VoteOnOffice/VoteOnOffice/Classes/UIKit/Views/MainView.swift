@@ -16,6 +16,7 @@ class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
     var items: [DataVoteCell] = []
     let abc:ReadDataBase = ReadDataBase()
+    var selectRow:String!
     
     @IBAction func SignOut(_ sender: Any) {
         let firebaseAuth = Auth.auth()
@@ -28,7 +29,8 @@ class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate{
         }
         
     }
-    override func viewDidLoad() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.readDataBase()
         //self.tableView.register(MyCell.self, forCellReuseIdentifier: "cell")
         // Do any additional setup after loading the view, typically from a nib.
@@ -42,20 +44,30 @@ class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate{
                 for documents in (snapshot?.documents)!{
                     var dtc = DataVoteCell()
                     dtc.title = (documents.data()["voteTitle"]as?String)!
-                    dtc.status = (documents.data()["voteStatus"]as?Bool)!
+                    //dtc.status = (documents.data()["voteStatus"]as?Bool)!
                     dtc.time = (documents.data()["voteDate"]as?String)!
-                    self.items.append(dtc)
-                    print(dtc)
-                    self.upload()
+                    dtc.UUID = (documents.data()["voteUUID"]as?String)!
+                    db.collection("Users").whereField("userEmail", isEqualTo: Auth.auth().currentUser?.email).getDocuments{(snapshot,error) in
+                        if error != nil {print(error as Any)}
+                        else{
+                            for documents in (snapshot?.documents)!{
+                                let arrays:[[String:Any]] = (documents.data()["userVotesList"] as? [[String : Any]])!
+                                let even = arrays.filter { $0["voteUUID"] as? String == dtc.UUID}
+                                if even.count > 0 {dtc.status = true}
+                                self.items.append(dtc)
+                                self.tableView.reloadData()
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                    self.tableView.reloadData()
                 }
             }
         }
-        print((Auth.auth().currentUser?.email)!)
     }
     
-    func upload(){
-        self.tableView.reloadData()
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -85,10 +97,16 @@ class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate{
 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You selected cell #\(indexPath.row)!")
+        selectRow = self.items[indexPath.row].UUID
+        performSegue(withIdentifier: "VoteView", sender: self)
+        print(selectRow)
     }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let ViewController = segue.destination as? VoteView {
+            ViewController.UUID = selectRow
+        }
+    }
     
     
 }

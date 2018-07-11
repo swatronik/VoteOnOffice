@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class SignUpView: UIViewController {
     
@@ -20,6 +21,20 @@ class SignUpView: UIViewController {
         Auth.auth().createUser(withEmail: Email.text!, password: Password.text!) { (user, error) in
             if error == nil {
                 print("success")
+                let db = Firestore.firestore()
+                let arr:[[String:Any]]=[]
+                let docData: [String: Any] = [
+                    "userEmail" : self.Email.text,
+                    "userRole" : false,
+                    "userVotesList" : arr
+                ]
+                db.collection("Users").document(self.Email.text!).setData(docData) { err in
+                    if let err = err {
+                        print("Error writing document: \(err)")
+                    } else {
+                        print("Document successfully written!")
+                    }
+                }
                 self.performSegue(withIdentifier: "MainViewSeque", sender: self)
             }else{
                 print("error",error!)

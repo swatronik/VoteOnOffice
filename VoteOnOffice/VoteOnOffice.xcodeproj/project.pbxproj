@@ -9,7 +9,11 @@
 /* Begin PBXBuildFile section */
 		160823F8B1539A74FAF7AEB4 /* Pods_VoteOnOfficeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EE17C5FCC6C8DBCD58EC353 /* Pods_VoteOnOfficeTests.framework */; };
 		2ED4AD048DA60B003C2F9C97 /* Pods_VoteOnOffice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFCD9F303F749859C6F887E1 /* Pods_VoteOnOffice.framework */; };
-		8415DF8D20EA0F4300AA1284 /* DataVoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8415DF8C20EA0F4300AA1284 /* DataVoteCell.swift */; };
+		8415DF8D20EA0F4300AA1284 /* DataStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8415DF8C20EA0F4300AA1284 /* DataStruct.swift */; };
+		8416991020EB4CF3009B9CB3 /* AddVoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8416990F20EB4CF3009B9CB3 /* AddVoteView.swift */; };
+		8416991220EB58E1009B9CB3 /* AddVoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8416991120EB58E1009B9CB3 /* AddVoteCell.swift */; };
+		8418128A20F336B000ADF53A /* VoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8418128920F336B000ADF53A /* VoteView.swift */; };
+		8418128C20F34B7A00ADF53A /* VoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8418128B20F34B7A00ADF53A /* VoteCell.swift */; };
 		8440EC3E20E61A79006AD703 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8440EC3D20E61A78006AD703 /* AppDelegate.swift */; };
 		8440EC4020E63FD8006AD703 /* MyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8440EC3F20E63FD8006AD703 /* MyCell.swift */; };
 		845176F220E36591001855CD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845176F120E36591001855CD /* ViewController.swift */; };
@@ -41,7 +45,11 @@
 		4F3517DE77089C817A49AB99 /* Pods-VoteOnOffice.internal.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoteOnOffice.internal.xcconfig"; path = "Pods/Target Support Files/Pods-VoteOnOffice/Pods-VoteOnOffice.internal.xcconfig"; sourceTree = "<group>"; };
 		53E50A681E0E4C5902307D46 /* Pods-VoteOnOffice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoteOnOffice.release.xcconfig"; path = "Pods/Target Support Files/Pods-VoteOnOffice/Pods-VoteOnOffice.release.xcconfig"; sourceTree = "<group>"; };
 		82D158F6C7FBBC34FEFB1757 /* Pods-VoteOnOffice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoteOnOffice.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VoteOnOffice/Pods-VoteOnOffice.debug.xcconfig"; sourceTree = "<group>"; };
-		8415DF8C20EA0F4300AA1284 /* DataVoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataVoteCell.swift; sourceTree = "<group>"; };
+		8415DF8C20EA0F4300AA1284 /* DataStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStruct.swift; sourceTree = "<group>"; };
+		8416990F20EB4CF3009B9CB3 /* AddVoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVoteView.swift; sourceTree = "<group>"; };
+		8416991120EB58E1009B9CB3 /* AddVoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVoteCell.swift; sourceTree = "<group>"; };
+		8418128920F336B000ADF53A /* VoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteView.swift; sourceTree = "<group>"; };
+		8418128B20F34B7A00ADF53A /* VoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteCell.swift; sourceTree = "<group>"; };
 		8440EC3D20E61A78006AD703 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8440EC3F20E63FD8006AD703 /* MyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCell.swift; sourceTree = "<group>"; };
 		845176EC20E36591001855CD /* VoteOnOffice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoteOnOffice.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +99,16 @@
 				3EE17C5FCC6C8DBCD58EC353 /* Pods_VoteOnOfficeTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8418128D20F34C9100ADF53A /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				8416991120EB58E1009B9CB3 /* AddVoteCell.swift */,
+				8418128B20F34B7A00ADF53A /* VoteCell.swift */,
+				8440EC3F20E63FD8006AD703 /* MyCell.swift */,
+			);
+			path = cell;
 			sourceTree = "<group>";
 		};
 		845176E320E36591001855CD = {
@@ -165,12 +183,14 @@
 		8451772120E36A56001855CD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8418128D20F34C9100ADF53A /* cell */,
 				8451772420E36A90001855CD /* SignInView.swift */,
 				8451772620E36A98001855CD /* SignUpView.swift */,
 				8451772220E36A87001855CD /* FirstView.swift */,
 				8480937B20E397D00042569F /* MainView.swift */,
-				8440EC3F20E63FD8006AD703 /* MyCell.swift */,
-				8415DF8C20EA0F4300AA1284 /* DataVoteCell.swift */,
+				8416990F20EB4CF3009B9CB3 /* AddVoteView.swift */,
+				8418128920F336B000ADF53A /* VoteView.swift */,
+				8415DF8C20EA0F4300AA1284 /* DataStruct.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -445,9 +465,13 @@
 			files = (
 				8480937C20E397D00042569F /* MainView.swift in Sources */,
 				8451772720E36A98001855CD /* SignUpView.swift in Sources */,
+				8418128A20F336B000ADF53A /* VoteView.swift in Sources */,
+				8418128C20F34B7A00ADF53A /* VoteCell.swift in Sources */,
+				8416991220EB58E1009B9CB3 /* AddVoteCell.swift in Sources */,
 				8451772320E36A87001855CD /* FirstView.swift in Sources */,
 				8440EC3E20E61A79006AD703 /* AppDelegate.swift in Sources */,
-				8415DF8D20EA0F4300AA1284 /* DataVoteCell.swift in Sources */,
+				8415DF8D20EA0F4300AA1284 /* DataStruct.swift in Sources */,
+				8416991020EB4CF3009B9CB3 /* AddVoteView.swift in Sources */,
 				84CE638B20E4B38A0017029D /* ReadDataBase.swift in Sources */,
 				8440EC4020E63FD8006AD703 /* MyCell.swift in Sources */,
 				8451772520E36A90001855CD /* SignInView.swift in Sources */,

@@ -12,5 +12,12 @@ struct DataVoteCell {
     var title = ""
     var time = ""
     var status = false
-    
+    var UUID = ""
+}
+
+struct DataVoteVariants{
+    var name = ""
+    var id = 0
+    var img = ""
+    var status = 0
 }
