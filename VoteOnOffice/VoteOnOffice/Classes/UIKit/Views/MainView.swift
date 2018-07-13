@@ -17,7 +17,9 @@ class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate{
     var items: [DataVoteCell] = []
     let abc:ReadDataBase = ReadDataBase()
     var selectRow:String!
+    var adminStatus = false
     
+    @IBOutlet weak var btnAdd: UIButton!
     @IBAction func SignOut(_ sender: Any) {
         let firebaseAuth = Auth.auth()
         do {
@@ -32,6 +34,8 @@ class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.readDataBase()
+        if adminStatus == false { btnAdd.isHidden = true }
+        else {btnAdd.isHidden = false}
         //self.tableView.register(MyCell.self, forCellReuseIdentifier: "cell")
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -51,11 +55,14 @@ class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate{
                         if error != nil {print(error as Any)}
                         else{
                             for documents in (snapshot?.documents)!{
+                                self.adminStatus = (documents.data()["userRole"] as? Bool)!
                                 let arrays:[[String:Any]] = (documents.data()["userVotesList"] as? [[String : Any]])!
                                 let even = arrays.filter { $0["voteUUID"] as? String == dtc.UUID}
                                 if even.count > 0 {dtc.status = true}
                                 self.items.append(dtc)
                                 self.tableView.reloadData()
+                                if self.adminStatus == false { self.btnAdd.isHidden = true }
+                                else {self.btnAdd.isHidden = false}
                             }
                             
                         }
@@ -95,6 +102,26 @@ class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate{
         return cell
     }
 
+    func tableView(_ tableView: UITableView, commit editingStyle:   UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if adminStatus == true {
+            if (editingStyle == .delete) {
+                let db = Firestore.firestore()
+                db.collection("Votes").document(items[indexPath.row].UUID).delete() { err in
+                    if let err = err {
+                        print("Error removing document: \(err)")
+                    } else {
+                        print("Document successfully removed!")
+                        print(self.items[indexPath.row].UUID)
+                        self.items.remove(at: indexPath.row)
+                        tableView.beginUpdates()
+                        tableView.deleteRows(at: [indexPath], with: .middle)
+                        tableView.endUpdates()
+                    }
+                }
+            }
+            
+        }
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectRow = self.items[indexPath.row].UUID

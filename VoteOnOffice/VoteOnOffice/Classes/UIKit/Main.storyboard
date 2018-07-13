@@ -221,6 +221,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="UGT-1Z-fCA"/>
                     <connections>
+                        <outlet property="btnAdd" destination="Igv-Tb-vMo" id="AfP-cd-z56"/>
                         <outlet property="tableView" destination="0vs-UC-8yp" id="l87-Oz-xsA"/>
                         <segue destination="bd3-gv-y01" kind="showDetail" identifier="ReturnOnFirstView" id="KKn-Nr-bxq"/>
                         <segue destination="WoI-8H-V9P" kind="show" identifier="VoteView" id="drQ-Rg-HVo"/>
@@ -256,14 +257,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Description" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4R4-W5-xfV">
-                                <rect key="frame" x="16" y="120" width="343" height="139"/>
+                                <rect key="frame" x="16" y="120" width="137" height="180"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="J3y-yO-3vh">
-                                <rect key="frame" x="0.0" y="267" width="375" height="400"/>
+                                <rect key="frame" x="0.0" y="308" width="375" height="359"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -302,12 +303,18 @@
                                     <outlet property="delegate" destination="WoI-8H-V9P" id="MLb-Lc-mhE"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ddT-V7-ndl" customClass="PieChartView" customModule="Charts">
+                                <rect key="frame" x="161" y="120" width="214" height="180"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="fap-uB-cq5"/>
                     </view>
                     <connections>
                         <outlet property="descriptionLabel" destination="4R4-W5-xfV" id="U59-A0-3fE"/>
+                        <outlet property="pieChart" destination="ddT-V7-ndl" id="pgy-Jk-04a"/>
                         <outlet property="tableView" destination="J3y-yO-3vh" id="47x-Wm-T4Y"/>
                         <outlet property="titleLabel" destination="b9c-ZD-1qT" id="nxe-df-mVo"/>
                     </connections>
@@ -542,6 +549,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hJ5-LK-fBG"/>
+        <segue reference="SWL-y6-Vur"/>
     </inferredMetricsTieBreakers>
 </document>

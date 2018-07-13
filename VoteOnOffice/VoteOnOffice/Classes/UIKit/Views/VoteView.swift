@@ -9,12 +9,14 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
+import Charts
 
 class VoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UITextView!
+    @IBOutlet weak var pieChart: PieChartView!
     var UUID: String!
     var arr: [[String:Any]] = []
     var selectRow: Int = -1
@@ -34,6 +36,7 @@ class VoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
                                 let even = arrays.filter { $0["voteUUID"] as? String == self.UUID}
                                 if even.count > 0 { self.selectRow = even.first!["voteVariantID"]! as! Int }
                                 self.tableView.reloadData()
+                                self.pieChartUpdate()
                             }
                             
                         }
@@ -53,6 +56,27 @@ class VoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func pieChartUpdate() -> Void {
+        var arrEntry:[PieChartDataEntry] = []
+        for ind in 0..<arr.count{
+            let entry = PieChartDataEntry(value: (Double(arr[ind]["variantVoteStatus"] as! Int)), label: "#"+String(ind+1))
+            arrEntry.append(entry)
+        }
+        let dataSet = PieChartDataSet(values: arrEntry, label: "")
+        dataSet.colors = ChartColorTemplates.joyful()
+        dataSet.entryLabelColor = UIColor.black
+        dataSet.valueTextColor = UIColor.black
+        let data = PieChartData(dataSet: dataSet)
+        pieChart.data = data
+        pieChart.chartDescription?.text = ""
+        
+        //All other additions to this function will go here
+        
+        //This must stay at end of function
+        pieChart.notifyDataSetChanged()
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
