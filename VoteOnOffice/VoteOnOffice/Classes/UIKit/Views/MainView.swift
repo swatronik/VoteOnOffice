@@ -8,6 +8,7 @@
 
 import FirebaseAuth
 import FirebaseFirestore
+import RealmSwift
 import UIKit
 
 struct DataVoteCell {
@@ -28,6 +29,13 @@ class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     let emailString: String! = Auth.auth().currentUser?.email
 
     @IBAction private func signOut(_ sender: Any) {
+        guard let realm = try? Realm() else {
+            return
+        }
+        try? realm.write {
+            let result = realm.objects(RememberData.self)
+            realm.delete(result)
+        }
         let firebaseAuth = Auth.auth()
         do {
             try
@@ -40,6 +48,7 @@ class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
         self.readDataBase()
         if adminStatus == false { btnAdd.isHidden = true
         } else {
@@ -47,6 +56,13 @@ class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
         //self.tableView.register(MyCell.self, forCellReuseIdentifier: "cell")
         // Do any additional setup after loading the view, typically from a nib.
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        items.removeAll()
+        tableView.reloadData()
     }
 
     func dataVoteInit(documents: QueryDocumentSnapshot) -> DataVoteCell {

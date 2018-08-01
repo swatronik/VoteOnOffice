@@ -8,6 +8,7 @@
 
 import FirebaseAuth
 import FirebaseFirestore
+import RealmSwift
 import UIKit
 
 class SignUpView: UIViewController {
@@ -46,6 +47,17 @@ class SignUpView: UIViewController {
                 }
                 self.signUp.isEnabled = true
                 print("Sign Up Success")
+                if self.rememberMeSwitch.isOn {
+                    let thisLogin = RememberData()
+                    guard let realm = try? Realm() else {
+                        return
+                    }
+                    try? realm.write {
+                        thisLogin.login = emailString
+                        thisLogin.password = passwordString
+                        realm.add(thisLogin)
+                    }
+                }
             }
             self.performSegue(withIdentifier: "MainViewSeque", sender: self)
         }

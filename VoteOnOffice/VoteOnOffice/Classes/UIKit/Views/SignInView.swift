@@ -7,16 +7,30 @@
 //
 
 import FirebaseAuth
+import RealmSwift
 import UIKit
+
+class RememberData: Object {
+    @objc dynamic var login = ""
+    @objc dynamic var password = ""
+
+    override class func primaryKey() -> String? {
+        return "login"
+    }
+}
 
 class SignInView: UIViewController {
 
     @IBOutlet private weak var emailTextField: UITextField!
     @IBOutlet private weak var passwordTextField: UITextField!
-    @IBOutlet private weak var remeberMeSwitch: UISwitch!
+    @IBOutlet private weak var rememberMeSwitch: UISwitch!
     @IBOutlet private weak var signIn: UIButton!
 
     @IBAction private func signIn(_ sender: Any) {
+        loginInSistem()
+    }
+
+    func loginInSistem() {
         signIn.isEnabled = false
         let emailString: String! = emailTextField.text
         let passwordString: String! = passwordTextField.text
@@ -33,12 +47,33 @@ class SignInView: UIViewController {
             }
             self.signIn.isEnabled = true
             print("Sign In success")
+            if self.rememberMeSwitch.isOn {
+                let thisLogin = RememberData()
+                guard let realm = try? Realm() else {
+                    return
+                }
+                try? realm.write {
+                    thisLogin.login = emailString
+                    thisLogin.password = passwordString
+                    realm.add(thisLogin)
+                }
+            }
             self.performSegue(withIdentifier: "MainViewSeque", sender: self)
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let realm = try? Realm() else {
+            return
+        }
+        let results = realm.objects(RememberData.self)
+        guard let logining = results.first else {
+            return
+        }
+        emailTextField.text = logining.login
+        passwordTextField.text = logining.password
+        loginInSistem()
         // Do any additional setup after loading the view, typically from a nib.
     }
 

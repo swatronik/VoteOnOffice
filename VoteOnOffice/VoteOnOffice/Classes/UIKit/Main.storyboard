@@ -52,7 +52,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="906" y="-351"/>
+            <point key="canvasLocation" x="913" y="-306"/>
         </scene>
         <!--Sign Up View-->
         <scene sceneID="dCa-5P-6lp">
@@ -141,7 +141,7 @@
                         <outlet property="passwordTextField" destination="Pcb-Sa-YkD" id="nk2-1P-rb7"/>
                         <outlet property="rememberMeSwitch" destination="UGa-Nm-ycR" id="hCQ-im-j1g"/>
                         <outlet property="signUp" destination="aKr-WP-7XI" id="dD3-te-eFq"/>
-                        <segue destination="t0T-tp-UWw" kind="showDetail" identifier="MainViewSeque" id="aE5-sd-0oO"/>
+                        <segue destination="t0T-tp-UWw" kind="show" identifier="MainViewSeque" id="aE5-sd-0oO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cCy-1w-A83" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -241,7 +241,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dGX-nk-kbQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2476" y="-351"/>
+            <point key="canvasLocation" x="2479" y="-306"/>
         </scene>
         <!--Vote View-->
         <scene sceneID="L5B-Rs-vcK">
@@ -251,16 +251,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y6Y-f9-UMf">
-                                <rect key="frame" x="16" y="20" width="100" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <segue destination="t0T-tp-UWw" kind="showDetail" id="TS2-mN-29j"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b9c-ZD-1qT">
                                 <rect key="frame" x="16" y="91" width="343" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -325,7 +315,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wF8-JS-yTS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3428" y="-351.27436281859076"/>
+            <point key="canvasLocation" x="3262" y="36"/>
         </scene>
         <!--Sign In View-->
         <scene sceneID="tcS-wS-JJZ">
@@ -400,9 +390,9 @@
                     <connections>
                         <outlet property="emailTextField" destination="D2q-0t-GAq" id="Unn-La-jGC"/>
                         <outlet property="passwordTextField" destination="jn6-lM-qdN" id="Tq2-KJ-CFV"/>
-                        <outlet property="remeberMeSwitch" destination="vFR-GL-Kbj" id="OWk-dE-dlp"/>
+                        <outlet property="rememberMeSwitch" destination="vFR-GL-Kbj" id="afB-ha-z0L"/>
                         <outlet property="signIn" destination="fUN-pc-hFB" id="ggb-ba-HpF"/>
-                        <segue destination="t0T-tp-UWw" kind="showDetail" identifier="MainViewSeque" id="SWL-y6-Vur"/>
+                        <segue destination="t0T-tp-UWw" kind="show" identifier="MainViewSeque" id="SWL-y6-Vur"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LqA-gh-ArA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -505,22 +495,11 @@
                                     <action selector="addNewVarible:" destination="cFM-Sx-3bg" eventType="touchUpInside" id="MuN-um-oOY"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8c0-rR-O2b">
-                                <rect key="frame" x="16" y="20" width="100" height="41"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <segue destination="t0T-tp-UWw" kind="show" identifier="ReturnOnMainView" id="hJ5-LK-fBG"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="rbV-2D-aQn"/>
                     </view>
                     <connections>
-                        <outlet property="cancelButton" destination="8c0-rR-O2b" id="0tT-be-yvi"/>
                         <outlet property="descriptionLabel" destination="Qaz-5w-dGQ" id="7vS-uo-NtO"/>
                         <outlet property="tableViewApp" destination="H9n-1Y-icA" id="h2B-m8-r1j"/>
                         <outlet property="titleLabel" destination="tFH-BF-pLg" id="Lsg-mU-tyB"/>
@@ -528,7 +507,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Woh-h3-tGM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2528.8000000000002" y="-1110.4947526236883"/>
+            <point key="canvasLocation" x="3262" y="-639"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gxH-OQ-9Hf">
@@ -544,7 +523,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pcn-5a-VeQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="74" y="-351"/>
+            <point key="canvasLocation" x="14" y="-306"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
