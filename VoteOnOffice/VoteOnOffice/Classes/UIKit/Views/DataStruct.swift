@@ -1,4 +1,3 @@
-//
 //  DataVoteCell.swift
 //  VoteOnOffice
 //
@@ -7,7 +6,7 @@
 //
 
 import Foundation
-
+/*
 struct DataVoteCell {
     var title = ""
     var time = ""
@@ -15,9 +14,10 @@ struct DataVoteCell {
     var UUID = ""
 }
 
-struct DataVoteVariants{
+struct DataVoteVariants {
     var name = ""
     var id = 0
     var img = ""
     var status = 0
 }
+*/

@@ -9,18 +9,15 @@
 import UIKit
 
 class VoteCell: UITableViewCell {
-    
-    @IBOutlet weak var title:UILabel!
-    @IBOutlet weak var procent: UILabel!
-    
-    var status:Int = 0
-    
+    @IBOutlet private weak var title: UILabel!
+    var status: Int = 0
+    func titleSet(value: String) {
+        title.text = value
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
 }

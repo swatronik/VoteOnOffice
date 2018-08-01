@@ -6,33 +6,42 @@
 //  Copyright © 2018 Heads and Hands. All rights reserved.
 //
 
-import UIKit
 import FirebaseAuth
+import UIKit
 
 class SignInView: UIViewController {
-    
-    @IBOutlet weak var Email: UITextField!
-    @IBOutlet weak var Password: UITextField!
-    @IBOutlet weak var RemeberMe: UISwitch!
-    @IBOutlet weak var signIn: UIButton!
-    
-    
-    @IBAction func SignIn(_ sender: Any) {
-        Auth.auth().signIn(withEmail: Email.text!, password: Password.text!) { (user, error) in
-            if error == nil {
-                print("success")
-                self.performSegue(withIdentifier: "MainViewSeque", sender: self)
-            }else{
-                print("error",error!)
+
+    @IBOutlet private weak var emailTextField: UITextField!
+    @IBOutlet private weak var passwordTextField: UITextField!
+    @IBOutlet private weak var remeberMeSwitch: UISwitch!
+    @IBOutlet private weak var signIn: UIButton!
+
+    @IBAction private func signIn(_ sender: Any) {
+        signIn.isEnabled = false
+        let emailString: String! = emailTextField.text
+        let passwordString: String! = passwordTextField.text
+        guard emailString.count >= 6 && passwordString.count >= 6 else {
+            print ("Email or Password so short")
+            signIn.isEnabled = true
+            return
+        }
+        Auth.auth().signIn(withEmail: emailString, password: passwordString) { _, error in
+            if let error = error {
+                print("Sign In error:", error)
+                self.signIn.isEnabled = true
+                return
             }
+            self.signIn.isEnabled = true
+            print("Sign In success")
+            self.performSegue(withIdentifier: "MainViewSeque", sender: self)
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

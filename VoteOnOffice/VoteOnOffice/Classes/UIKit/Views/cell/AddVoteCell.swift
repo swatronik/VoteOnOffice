@@ -9,16 +9,14 @@
 import UIKit
 
 class AddVoteCell: UITableViewCell {
-    
-    @IBOutlet weak var textVoteCell: UITextView!
-    @IBOutlet weak var imageVoteAdd: UIImageView!    
-    
+    @IBOutlet private weak var textVoteCell: UITextView!
+    func getText() -> String {
+        return textVoteCell.text
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
 }
