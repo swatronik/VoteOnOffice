@@ -17,10 +17,11 @@ class SignInView: UIViewController {
     @IBOutlet private weak var passwordTextField: UITextField!
     @IBOutlet private weak var rememberMeSwitch: UISwitch!
     @IBOutlet private weak var signIn: UIButton!
-
+    
+    let signInViewModel: SignInViewModel = SignInViewModel()
+    
     @IBAction private func signIn(_ sender: Any) {
         signIn.isEnabled = false
-        let signInViewModel: SignInViewModel = SignInViewModel()
         if signInViewModel.loginInSistem(email: emailTextField.text!, password: passwordTextField.text!, switchRemember: rememberMeSwitch.isOn) {
             self.performSegue(withIdentifier: "MainViewSeque", sender: self)
         }
@@ -29,7 +30,6 @@ class SignInView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let signInViewModel: SignInViewModel = SignInViewModel()
         if signInViewModel.oldDataLoading() {
             self.performSegue(withIdentifier: "MainViewSeque", sender: self)
         }
