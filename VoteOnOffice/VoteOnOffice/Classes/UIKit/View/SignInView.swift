@@ -38,6 +38,7 @@ class SignInView: UIViewController {
             }.disposed(by: disposeBag)
         signInViewModel.loginIsBool.asObservable().bind(to: login)
         signInViewModel.oldDataLoading()
+
         // Do any additional setup after loading the view, typically from a nib.
     }
     

@@ -32,5 +32,4 @@ class SignInModel {
         }
         return logining
     }
-    
 }
