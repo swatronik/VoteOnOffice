@@ -12,6 +12,8 @@ pod 'Firebase/Storage'
 pod 'Firebase/Firestore'
 pod 'Charts'
 pod 'RealmSwift'
+pod 'RxSwift',    '~> 4.0'
+pod 'RxCocoa',    '~> 4.0'
   target 'VoteOnOfficeTests' do
     inherit! :search_paths
     # Pods for testing
@@ -21,6 +23,8 @@ pod 'Firebase/Storage'
 pod 'Firebase/Firestore'
 pod 'Charts'
 pod 'RealmSwift'
+pod 'RxBlocking', '~> 4.0'
+pod 'RxTest',     '~> 4.0'
   end
 
 end

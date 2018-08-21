@@ -5,45 +5,42 @@
 //  Created by New on 10.08.2018.
 //  Copyright © 2018 Heads and Hands. All rights reserved.
 //
-
 import FirebaseAuth
 import RealmSwift
+import RxSwift
 
 class SignInViewModel {
-    
+
+    var loginIsBool = PublishSubject<Bool>()
     private var signInModel: SignInModel = SignInModel()
     
-    func loginInSistem(email: String, password: String, switchRemember: Bool) -> Bool {
-        guard let login: Bool = signInModel.loginInSystem(email: email, password: password, switchRemember: switchRemember) else {
-            return false
+    func loginInSistem(email: String, password: String, switchRemember: Bool) {
+        guard email.count >= 6 && password.count >= 6 else {
+            print ("Email or Password so short")
+            loginIsBool.onNext(false)
+            return
         }
-        if !login {
-            return false
-        } else if Auth.auth().currentUser?.email == nil {
-                return false
-            } else {
-                return true
+        Auth.auth().signIn(withEmail: email, password: password) { _, error in
+            if let error = error {
+                print("Sign In error:", error)
+                self.loginIsBool.onNext(false)
+                return
             }
+            self.loginIsBool.onNext(true)
+            print("Sign In success")
+            if switchRemember {
+                self.signInModel.writeData(email: email, password: password)
+            }
+        }
     }
     
-    func oldDataLoading() -> Bool {
-        guard let realm = try? Realm() else {
-            return false
+    func oldDataLoading() {
+        let logining: RememberData? = signInModel.readData()
+        guard let loginData = logining else {
+            loginIsBool.onNext(false)
+            return
         }
-        let results = realm.objects(RememberData.self)
-        guard let logining = results.first else {
-            return false
-        }
-        guard let login: Bool = signInModel.loginInSystem(email: logining.login, password: logining.password, switchRemember: false) else {
-            return false
-        }
-        if !login {
-            return false
-        } else if Auth.auth().currentUser?.email == nil {
-                return false
-            } else {
-                return true
-            }
+        self.loginInSistem(email: loginData.login, password: loginData.password, switchRemember: false)
     }
     
 }
