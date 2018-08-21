@@ -5,48 +5,42 @@
 //  Created by New on 10.08.2018.
 //  Copyright © 2018 Heads and Hands. All rights reserved.
 //
-
 import FirebaseAuth
 import RealmSwift
+import RxSwift
 
 class SignInViewModel {
-    
+
+    var loginIsBool = PublishSubject<Bool>()
     private var signInModel: SignInModel = SignInModel()
     
-    func loginInSistem(email: String, password: String, switchRemember: Bool) -> Bool {
+    func loginInSistem(email: String, password: String, switchRemember: Bool) {
         guard email.count >= 6 && password.count >= 6 else {
             print ("Email or Password so short")
-//            signIn.isEnabled = true
-            return false
+            loginIsBool.onNext(false)
+            return
         }
         Auth.auth().signIn(withEmail: email, password: password) { _, error in
             if let error = error {
                 print("Sign In error:", error)
-//                self.signIn.isEnabled = true
+                self.loginIsBool.onNext(false)
                 return
             }
-//            self.signIn.isEnabled = true
+            self.loginIsBool.onNext(true)
             print("Sign In success")
             if switchRemember {
-                signInModel.writeData(email: email, password: password)
+                self.signInModel.writeData(email: email, password: password)
             }
-//        self.performSegue(withIdentifier: "MainViewSeque", sender: self)
-        }
-        if Auth.auth().currentUser?.email == nil {
-            return false
-        } else {
-            return true
         }
     }
     
-    func oldDataLoading() -> Bool {
-        let logining: RememberData = signInModel.readData()
-        self.loginInSystem(email: logining.login, password: logining.password, switchRemember: false)
-        if Auth.auth().currentUser?.email == nil {
-            return false
-        } else {
-            return true
+    func oldDataLoading() {
+        let logining: RememberData? = signInModel.readData()
+        guard let loginData = logining else {
+            loginIsBool.onNext(false)
+            return
         }
+        self.loginInSistem(email: loginData.login, password: loginData.password, switchRemember: false)
     }
     
 }
