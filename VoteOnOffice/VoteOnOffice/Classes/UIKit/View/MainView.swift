@@ -9,126 +9,63 @@
 import FirebaseAuth
 import FirebaseFirestore
 import RealmSwift
+import RxSwift
+import RxCocoa
 import UIKit
-
-struct DataVoteCell {
-    var title = ""
-    var time = ""
-    var status = false
-    var UUID = ""
-}
 
 class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet private weak var btnAdd: UIButton!
     @IBOutlet private weak var tableView: UITableView!
 
-    var items: [DataVoteCell] = []
+    var signOutBool = Variable<Bool>(false)
+    var items = Variable<[DataVoteCell]>([])
+    var adminStatus = Variable<Bool>(false)
+    
+    //var items: [DataVoteCell] = []
     var selectRow: String!
-    var adminStatus = false
-    let emailString: String! = Auth.auth().currentUser?.email
+    
+    let mainViewModel: MainViewModel = MainViewModel()
+    let disposeBag = DisposeBag()
 
     @IBAction private func signOut(_ sender: Any) {
-        guard let realm = try? Realm() else {
-            return
-        }
-        try? realm.write {
-            let result = realm.objects(RememberData.self)
-            realm.delete(result)
-        }
-        let firebaseAuth = Auth.auth()
-        do {
-            try
-                firebaseAuth.signOut()
-                performSegue(withIdentifier: "ReturnOnFirstView", sender: self)
-        } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
-        }
+        mainViewModel.signOut()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.setNavigationBarHidden(true, animated: false)
-        self.readDataBase()
-        if adminStatus == false { btnAdd.isHidden = true
-        } else {
-            btnAdd.isHidden = false
-        }
-        //self.tableView.register(MyCell.self, forCellReuseIdentifier: "cell")
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        signOutBool.asObservable().subscribe() { _ in
+            if self.signOutBool.value {
+                self.performSegue(withIdentifier: "ReturnOnFirstView", sender: self)
+            }
+            }.disposed(by: disposeBag)
+        mainViewModel.signOutBool.asObservable().bind(to: signOutBool).disposed(by: disposeBag)
+        
+        items.asObservable().subscribe() { _ in
+            self.tableView.reloadData()
+            }.disposed(by: disposeBag)
+        mainViewModel.items.asObservable().bind(to: items).disposed(by: disposeBag)
+        
+        adminStatus.asObservable().subscribe() { _ in
+            if self.adminStatus.value {
+                self.btnAdd.isHidden = false
+            } else {
+                self.btnAdd.isHidden = true
+            }
+            }.disposed(by: disposeBag)
+        mainViewModel.adminStatus.asObservable().bind(to: adminStatus).disposed(by: disposeBag)
+        
+        mainViewModel.readDataBase()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
-        items.removeAll()
+        mainViewModel.itemsDeleteAll()
         tableView.reloadData()
-    }
-
-    func dataVoteInit(documents: QueryDocumentSnapshot) -> DataVoteCell {
-        var dvc = DataVoteCell()
-        guard let dvcTitle: String = documents.data()["voteTitle"]as?String else {
-            return dvc
-        }
-        dvc.title = dvcTitle
-        guard let dvcTime: String = documents.data()["voteDate"]as?String else {
-            return dvc
-        }
-        dvc.time = dvcTime
-        guard let dvcUUID: String = documents.data()["voteUUID"]as?String else {
-            return dvc
-        }
-        dvc.UUID = dvcUUID
-        return dvc
-    }
-
-    func readDataBase() {
-        let databaseFirestore = Firestore.firestore()
-        databaseFirestore.collection("Votes").getDocuments { snapshot, error in
-            guard error == nil else {
-                print(error as Any)
-                return
-            }
-            guard let requestSnapshot = snapshot?.documents else {
-                fatalError("request snapshot Error")
-            }
-            for documents in requestSnapshot {
-                var dtc: DataVoteCell = self.dataVoteInit(documents: documents)
-                let request = databaseFirestore.collection("Users").whereField("userEmail", isEqualTo: self.emailString)
-                request.getDocuments { snapshot, error in
-                    guard error == nil else {
-                        print(error ?? Error.self)
-                        return
-                    }
-                    guard let requestSnapshot = snapshot?.documents else {
-                        fatalError("request snapshot Error")
-                    }
-                    for documents in requestSnapshot {
-                        guard let status: Bool = documents.data()["userRole"] as? Bool else {
-                            fatalError("Error admin status")
-                        }
-                        self.adminStatus = status
-                        guard let arrays: [[String: Any]] = documents.data()["userVotesList"] as?[[String: Any]] else {
-                            fatalError("Error convert array")
-                        }
-                        let even = arrays.filter {
-                            $0["voteUUID"] as? String == dtc.UUID
-                        }
-                        if !even.isEmpty {
-                            dtc.status = true
-                        }
-                        self.items.append(dtc)
-                        self.tableView.reloadData()
-                        if self.adminStatus == false {
-                            self.btnAdd.isHidden = true
-                        } else {
-                            self.btnAdd.isHidden = false
-                        }
-                    }
-                }
-                self.tableView.reloadData()
-            }
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -137,51 +74,41 @@ class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.items.count
+        return self.items.value.count
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: MyCell = tableView.dequeueReusableCell(withIdentifier: "cell") as? MyCell else {
             fatalError("Error Cell convert")
         }
-        if !items[indexPath.row].status {
-            cell.statusSet(value: "X", color: UIColor.red)
-        } else {
+        if items.value[indexPath.row].status {
             cell.statusSet(value: "V", color: UIColor.green)
+        } else {
+            cell.statusSet(value: "X", color: UIColor.red)
         }
-        cell.timeSet(value: items[indexPath.row].time)
-        cell.titleSet(value: items[indexPath.row].title)
+        cell.timeSet(value: items.value[indexPath.row].time)
+        cell.titleSet(value: items.value[indexPath.row].title)
         return cell
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if adminStatus == true {
+        if adminStatus.value {
             if editingStyle == .delete {
-                let databaseFirestore = Firestore.firestore()
-                databaseFirestore.collection("Votes").document(items[indexPath.row].UUID).delete { error in
-                    guard error == nil else {
-                        print (error ?? Error.self)
-                        return
-                    }
-                    print("Document successfully removed!")
-                    print(self.items[indexPath.row].UUID)
-                    self.items.remove(at: indexPath.row)
-                    tableView.beginUpdates()
-                    tableView.deleteRows(at: [indexPath], with: .middle)
-                    tableView.endUpdates()
-                }
+                self.mainViewModel.itemsDelete(index: indexPath.row)
+                tableView.reloadData()
             }
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectRow = self.items[indexPath.row].UUID
+        selectRow = self.items.value[indexPath.row].UUID
         performSegue(withIdentifier: "VoteView", sender: self)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let viewController = segue.destination as? VoteView {
             viewController.UUID = selectRow
+            print( viewController.UUID)
         }
     }
 }

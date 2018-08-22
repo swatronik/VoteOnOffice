@@ -12,7 +12,7 @@ import RxSwift
 class SignInViewModel {
 
     var loginIsBool = PublishSubject<Bool>()
-    private var signInModel: SignInModel = SignInModel()
+    private var signModel: SignModel = SignModel()
     
     func loginInSistem(email: String, password: String, switchRemember: Bool) {
         guard email.count >= 6 && password.count >= 6 else {
@@ -29,13 +29,13 @@ class SignInViewModel {
             self.loginIsBool.onNext(true)
             print("Sign In success")
             if switchRemember {
-                self.signInModel.writeData(email: email, password: password)
+                self.signModel.writeData(email: email, password: password)
             }
         }
     }
     
     func oldDataLoading() {
-        let logining: RememberData? = signInModel.readData()
+        let logining: RememberData? = signModel.readData()
         guard let loginData = logining else {
             loginIsBool.onNext(false)
             return

@@ -8,6 +8,13 @@
 
 import UIKit
 
+struct DataVoteCell {
+    var title = ""
+    var time = ""
+    var status = false
+    var UUID = ""
+}
+
 class VoteCell: UITableViewCell {
     @IBOutlet private weak var title: UILabel!
     var status: Int = 0

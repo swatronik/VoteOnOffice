@@ -6,9 +6,8 @@
 //  Copyright © 2018 Heads and Hands. All rights reserved.
 //
 
-import FirebaseAuth
-import FirebaseFirestore
-import RealmSwift
+import RxSwift
+import RxCocoa
 import UIKit
 
 class SignUpView: UIViewController {
@@ -17,54 +16,25 @@ class SignUpView: UIViewController {
     @IBOutlet private weak var passwordTextField: UITextField!
     @IBOutlet private weak var rememberMeSwitch: UISwitch!
     @IBOutlet private weak var signUp: UIButton!
-
+    
+    let signUpViewModel: SignUpViewModel = SignUpViewModel()
+    let disposeBag = DisposeBag()
+    var login = Variable<Bool>(false)
+    
     @IBAction private func signUp(_ sender: Any) {
         signUp.isEnabled = false
-        let emailString: String! = emailTextField.text
-        let passwordString: String! = passwordTextField.text
-        guard emailString.count >= 6 && passwordString.count >= 6 else {
-            print ("Email or Password so short")
-            signUp.isEnabled = true
-            return
-        }
-        Auth.auth().createUser(withEmail: emailString, password: passwordString) { _, error in
-            guard error == nil else {
-                print (error ?? Error.self)
-                self.signUp.isEnabled = true
-                return
-            }
-            let databaseFirestore = Firestore.firestore()
-            let docData: [String: Any] = [
-                "userEmail": emailString,
-                "userRole": false,
-                "userVotesList": [[String: Any]]()
-            ]
-            databaseFirestore.collection("Users").document(emailString).setData(docData) { err in
-                guard err == nil else {
-                    print("Sign Up Error: \(String(describing: err))")
-                    self.signUp.isEnabled = true
-                    return
-                }
-                self.signUp.isEnabled = true
-                print("Sign Up Success")
-                if self.rememberMeSwitch.isOn {
-                    let thisLogin = RememberData()
-                    guard let realm = try? Realm() else {
-                        return
-                    }
-                    try? realm.write {
-                        thisLogin.login = emailString
-                        thisLogin.password = passwordString
-                        realm.add(thisLogin)
-                    }
-                }
-            }
-            self.performSegue(withIdentifier: "MainViewSeque", sender: self)
-        }
+        signUpViewModel.loginInSistem(email: emailTextField.text!, password: passwordTextField.text!, switchRemember: rememberMeSwitch.isOn)
+        signUp.isEnabled = true
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        login.asObservable().subscribe() { _ in
+            if self.login.value {
+                self.performSegue(withIdentifier: "MainViewSeque", sender: self)
+            }
+        }.disposed(by: disposeBag)
+        signUpViewModel.loginIsBool.asObservable().bind(to: login).disposed(by: disposeBag)
         // Do any additional setup after loading the view, typically from a nib.
     }
 

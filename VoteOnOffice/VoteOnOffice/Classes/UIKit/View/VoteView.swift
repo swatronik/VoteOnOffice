@@ -25,6 +25,7 @@ class VoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         reloadViewData()
     }
 
