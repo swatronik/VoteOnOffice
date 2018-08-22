@@ -17,3 +17,30 @@ class RememberData: Object {
         return "login"
     }
 }
+
+class SignModel {
+    
+    func writeData(email: String, password: String) {
+        let thisLogin = RememberData()
+        guard let realm = try? Realm() else {
+            return
+        }
+        try? realm.write {
+            thisLogin.login = email
+            thisLogin.password = password
+            realm.add(thisLogin)
+        }
+    }
+    
+    func readData() -> RememberData? {
+        guard let realm = try? Realm() else {
+            return nil
+        }
+        let results = realm.objects(RememberData.self)
+        guard let logining = results.first else {
+            return nil
+        }
+        return logining
+    }
+    
+}
