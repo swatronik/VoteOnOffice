@@ -7,8 +7,8 @@
 //
 
 import Charts
-import FirebaseAuth
-import FirebaseFirestore
+import RxSwift
+import RxCocoa
 import UIKit
 
 class VoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -19,61 +19,33 @@ class VoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet private weak var pieChart: PieChartView!
 
     var UUID: String!
-    var arr: [[String: Any]] = []
-    var selectRow: Int = -1
-    var emailString: String! = Auth.auth().currentUser?.email
+    
+    let disposeBag = DisposeBag()
+    let voteViewModel: VoteViewModel = VoteViewModel()
+    var selectRow = Variable<Int>(-1)
+    var arr = Variable<[[String: Any]]>([])
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        reloadViewData()
+        voteViewModel.titleString.asObservable().bind(to: titleLabel.rx.text).disposed(by: disposeBag)
+        voteViewModel.descriptionString.asObservable().bind(to: descriptionLabel.rx.text).disposed(by: disposeBag)
+        selectRow.asObservable().subscribe() { _ in
+            self.voteViewModel.reloadViewData(UUID: self.UUID)
+            self.tableView.reloadData()
+            self.pieChartUpdate()
+            }.disposed(by: disposeBag)
+        voteViewModel.selectRow.asObservable().bind(to: selectRow).disposed(by: disposeBag)
+        
+        arr.asObservable().subscribe() { _ in
+            self.tableView.reloadData()
+            self.pieChartUpdate()
+            }.disposed(by: disposeBag)
+        voteViewModel.arr.asObservable().bind(to: arr).disposed(by: disposeBag)
+        
+        voteViewModel.reloadViewData(UUID: UUID)
     }
 
-    func reloadViewData() {
-        let databaseFirestore = Firestore.firestore()
-        databaseFirestore.collection("Votes").whereField("voteUUID", isEqualTo: UUID).getDocuments { snapshot, error in
-            guard error == nil else {
-                print(error as Any)
-                return
-            }
-            guard let requestSnapshot = snapshot?.documents else {
-                fatalError("request snapshot Error")
-            }
-            for documents in requestSnapshot {
-                databaseFirestore.collection("Users").whereField("userEmail", isEqualTo: self.emailString).getDocuments { snapshot, error in
-                    if let error = error {
-                        print(error)
-                        return
-                    }
-                    guard let requestSnapshot = snapshot?.documents else {
-                        fatalError("request snapshot Error")
-                    }
-                    for documents in requestSnapshot {
-                        guard let arrays: [[String: Any]] = documents.data()["userVotesList"] as? [[String: Any]] else {
-                            fatalError("Error in a reload data")
-                        }
-                        let even = arrays.filter { $0["voteUUID"] as? String == self.UUID
-                        }
-                        if !even.isEmpty {
-                            guard let evenFirst = even.first?["voteVariantID"] as? Int else {
-                                fatalError("Even first is not be")
-                            }
-                            self.selectRow = evenFirst
-                        }
-                        self.tableView.reloadData()
-                        self.pieChartUpdate()
-                    }
-                }
-                self.titleLabel?.text = documents.data()["voteTitle"]as?String
-                self.descriptionLabel?.text = documents.data()["voteDescription"]as?String
-                guard let arrVariants: [[String: Any]] = documents.data()["voteVariants"]as?[[String: Any]] else {
-                    fatalError("Error in a reload data")
-                }
-                self.arr = arrVariants
-                self.tableView.reloadData()
-            }
-        }
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -82,8 +54,8 @@ class VoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     func pieChartUpdate() {
         var arrEntry: [PieChartDataEntry] = []
-        for ind in 0..<arr.count {
-            if let valueChartData: Double = arr[ind]["variantVoteStatus"] as? Double {
+        for ind in 0..<arr.value.count {
+            if let valueChartData: Double = arr.value[ind]["variantVoteStatus"] as? Double {
                 let entry = PieChartDataEntry(value: valueChartData, label: "#"+String(ind + 1))
                 arrEntry.append(entry)
             }
@@ -99,18 +71,18 @@ class VoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.arr.count
+        return self.arr.value.count
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: VoteCell = (tableView.dequeueReusableCell(withIdentifier: "cell") as? VoteCell) else {
             fatalError("Error Cell convert")
         }
-        guard let titleCell: String = arr[indexPath.row]["variantName"] as? String else {
+        guard let titleCell: String = arr.value[indexPath.row]["variantName"] as? String else {
             fatalError("Error title convert")
         }
         cell.titleSet(value: titleCell)
-        if indexPath.row == selectRow {
+        if indexPath.row == selectRow.value {
             cell.backgroundColor = UIColor.green
             } else {
             cell.backgroundColor = UIColor.gray
@@ -118,94 +90,10 @@ class VoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 
-    func voteFirst(arrays: [[String: Any]], index: Int) {
-        let databaseFirestore = Firestore.firestore()
-        var arraysDB = arrays
-        arraysDB.append(["voteUUID": self.UUID, "voteVariantID": index])
-        databaseFirestore.collection("Users").document(self.emailString).updateData(["userVotesList": arrays])
-        self.viewWillAppear(true)
-        databaseFirestore.collection("Votes").whereField("voteUUID", isEqualTo: self.UUID).getDocuments { snapshot, error in
-            guard error == nil else {
-                print(error ?? Error.self)
-                return
-            }
-            guard let requestSnapshot = snapshot?.documents else {
-                fatalError("request snapshot Error")
-            }
-            for documents in requestSnapshot {
-                guard var array: [[String: Any]] = documents.data()["voteVariants"]as?[[String: Any]] else {
-                    fatalError("VoteFirst Error")
-                }
-                guard let mutationValue: Int = array[index]["variantVoteStatus"] as? Int else {
-                    fatalError("Error covernant voteFirst value")
-                }
-                array[index]["variantVoteStatus"] = mutationValue + 1
-                databaseFirestore.collection("Votes").document(self.UUID).updateData(["voteVariants": array])
-                self.reloadViewData()
-            }
-        }
-    }
-
-    func voteSecond(arrays: [[String: Any]], index: Int, extraIndex: Int) {
-        let databaseFirestore = Firestore.firestore()
-        databaseFirestore.collection("Votes").whereField("voteUUID", isEqualTo: self.UUID).getDocuments { snapshot, error in
-            guard error == nil else {
-                print(error ?? Error.self)
-                return
-            }
-            guard let requestSnapshot = snapshot?.documents else {
-                fatalError("request snapshot Error")
-            }
-            for documents in requestSnapshot {
-                guard var array: [[String: Any]] = documents.data()["voteVariants"]as?[[String: Any]] else {
-                    fatalError("Error in a voteSecond")
-                }
-                guard let mutationValue1: Int = array[extraIndex]["variantVoteStatus"] as? Int else {
-                    fatalError("Error covernant voteSecond value")
-                }
-                array[extraIndex]["variantVoteStatus"] = mutationValue1 - 1
-                guard let mutationValue2: Int = array[extraIndex]["variantVoteStatus"] as? Int else {
-                    fatalError("Error covernant voteSecond value")
-                }
-                array[index]["variantVoteStatus"] = mutationValue2 + 1
-                var even = arrays.filter {
-                    $0["voteUUID"] as? String != self.UUID
-                }
-                even.append(["voteUUID": self.UUID, "voteVariantID": index])
-                databaseFirestore.collection("Votes").document(self.UUID).updateData(["voteVariants": array])
-                databaseFirestore.collection("Users").document(self.emailString).updateData(["userVotesList": even])
-            }
-            self.reloadViewData()
-        }
-    }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let databaseFirestore = Firestore.firestore()
-        databaseFirestore.collection("Users").whereField("userEmail", isEqualTo: emailString).getDocuments { snapshot, error in
-            guard error == nil else {
-                print("Error: ", error as Any)
-                return
-            }
-            guard let requestSnapshot = snapshot?.documents else {
-                fatalError("request snapshot Error")
-            }
-            for documents in requestSnapshot {
-                guard let arrays: [[String: Any]] = documents.data()["userVotesList"] as? [[String: Any]] else {
-                    fatalError("Error covernant array")
-                }
-                let even = arrays.filter { $0["voteUUID"] as? String == self.UUID }
-                if even.isEmpty {
-                    self.voteFirst(arrays: arrays, index: indexPath.row)
-                } else {
-                    guard let evenFirst = even.first else {
-                        fatalError("Even first is not be")
-                    }
-                    guard let select: Int = evenFirst["voteVariantID"] as? Int else {
-                        fatalError("Error select row")
-                    }
-                    self.voteSecond(arrays: arrays, index: indexPath.row, extraIndex: select)
-                }
-            }
-        }
+        voteViewModel.tabOnCell(index: indexPath.row, UUID: UUID)
+        tableView.reloadData()
+        pieChartUpdate()
     }
 }
