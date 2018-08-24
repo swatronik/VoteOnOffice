@@ -30,7 +30,7 @@
 		D512AEC2212D4D030000713E /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512AEC1212D4D030000713E /* MainModel.swift */; };
 		D512AEC4212D5F9F0000713E /* AddVoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512AEC3212D5F9F0000713E /* AddVoteViewModel.swift */; };
 		D512AEC6212D5FB40000713E /* AddVoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D512AEC5212D5FB40000713E /* AddVoteModel.swift */; };
-		D59DCF36211D7883008D01EB /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = D59DCF35211D7883008D01EB /* .swiftlint.yml */; };
+		D5155CC3212FEA53006C3C61 /* VoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5155CC2212FEA53006C3C61 /* VoteViewModel.swift */; };
 		D59DCF3A211D7E05008D01EB /* SignModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59DCF39211D7E05008D01EB /* SignModel.swift */; };
 		D59DCF3E211D8070008D01EB /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59DCF3D211D8070008D01EB /* SignInViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -77,7 +77,7 @@
 		D512AEC1212D4D030000713E /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		D512AEC3212D5F9F0000713E /* AddVoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVoteViewModel.swift; sourceTree = "<group>"; };
 		D512AEC5212D5FB40000713E /* AddVoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddVoteModel.swift; sourceTree = "<group>"; };
-		D59DCF35211D7883008D01EB /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
+		D5155CC2212FEA53006C3C61 /* VoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewModel.swift; sourceTree = "<group>"; };
 		D59DCF39211D7E05008D01EB /* SignModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignModel.swift; sourceTree = "<group>"; };
 		D59DCF3D211D8070008D01EB /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		DBCAF05E5ED05A49D4904DA1 /* Pods-VoteOnOfficeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoteOnOfficeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VoteOnOfficeTests/Pods-VoteOnOfficeTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -128,7 +128,6 @@
 		845176E320E36591001855CD = {
 			isa = PBXGroup;
 			children = (
-				D59DCF35211D7883008D01EB /* .swiftlint.yml */,
 				8480937920E37DC20042569F /* GoogleService-Info.plist */,
 				845176EE20E36591001855CD /* VoteOnOffice */,
 				8451770320E36593001855CD /* VoteOnOfficeTests */,
@@ -232,6 +231,7 @@
 				D512AEBD212D49380000713E /* SignUpViewModel.swift */,
 				D512AEBF212D4CEC0000713E /* MainViewModel.swift */,
 				D512AEC3212D5F9F0000713E /* AddVoteViewModel.swift */,
+				D5155CC2212FEA53006C3C61 /* VoteViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -324,7 +324,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D59DCF36211D7883008D01EB /* .swiftlint.yml in Resources */,
 				845176FA20E36593001855CD /* LaunchScreen.storyboard in Resources */,
 				8480937A20E37DC20042569F /* GoogleService-Info.plist in Resources */,
 				845176F720E36593001855CD /* Assets.xcassets in Resources */,
@@ -529,6 +528,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5155CC3212FEA53006C3C61 /* VoteViewModel.swift in Sources */,
 				D512AEC2212D4D030000713E /* MainModel.swift in Sources */,
 				D59DCF3A211D7E05008D01EB /* SignModel.swift in Sources */,
 				8480937C20E397D00042569F /* MainView.swift in Sources */,
