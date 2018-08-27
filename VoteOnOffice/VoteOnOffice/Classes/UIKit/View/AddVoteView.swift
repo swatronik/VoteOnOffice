@@ -13,7 +13,7 @@ import UIKit
 
 class AddVoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    @IBOutlet private weak var cancelButton: UIButton!
+    @IBOutlet private weak var btnAdd: UIButton!
     @IBOutlet private weak var descriptionLabel: UITextView!
     @IBOutlet private weak var tableViewApp: UITableView!
     @IBOutlet private weak var titleLabel: UITextField!
@@ -24,7 +24,7 @@ class AddVoteView: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        btnAdd.layer.cornerRadius = btnAdd.frame.size.height/2
         items.asObservable().subscribe() { _ in
             self.tableViewApp.reloadData()
             }.disposed(by: disposeBag)

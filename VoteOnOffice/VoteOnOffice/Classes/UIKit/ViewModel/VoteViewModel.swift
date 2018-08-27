@@ -2,7 +2,7 @@
 //  VoteViewModel.swift
 //  VoteOnOffice
 //
-//  Created by New on 24.08.2018.
+//  Created by New on 27.08.2018.
 //  Copyright © 2018 Heads and Hands. All rights reserved.
 //
 
@@ -18,7 +18,7 @@ class VoteViewModel {
     var selectRow = PublishSubject<Int>()
     var titleString = PublishSubject<String>()
     var descriptionString = PublishSubject<String>()
-
+    
     
     func reloadViewData(UUID: String) {
         let databaseFirestore = Firestore.firestore()
@@ -91,7 +91,7 @@ class VoteViewModel {
             self.selectRow.onNext(index)
         }
     }
-
+    
     func voteSecond(arrays: [[String: Any]], index: Int, extraIndex: Int, UUID: String) {
         let databaseFirestore = Firestore.firestore()
         databaseFirestore.collection("Votes").whereField("voteUUID", isEqualTo: UUID).getDocuments { snapshot, error in
