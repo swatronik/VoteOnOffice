@@ -29,6 +29,8 @@ class SignUpView: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        
+        signUp.layer.cornerRadius = signUp.frame.size.height/2
         login.asObservable().subscribe() { _ in
             if self.login.value {
                 self.performSegue(withIdentifier: "MainViewSeque", sender: self)

@@ -9,9 +9,14 @@
 import UIKit
 
 class FirstView: UIViewController {
+    
+    @IBOutlet private weak var signIn: UIButton!
+    @IBOutlet private weak var signUp: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        signIn.layer.cornerRadius = signIn.frame.size.height/2
+        signUp.layer.cornerRadius = signUp.frame.size.height/2
         // Do any additional setup after loading the view, typically from a nib.
     }
 

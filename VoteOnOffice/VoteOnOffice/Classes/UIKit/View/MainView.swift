@@ -15,6 +15,7 @@ import UIKit
 
 class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet private weak var btnSignOut: UIButton!
     @IBOutlet private weak var btnAdd: UIButton!
     @IBOutlet private weak var tableView: UITableView!
 
@@ -35,8 +36,8 @@ class MainView: UIViewController, UITableViewDataSource, UITableViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        
+        btnAdd.layer.cornerRadius = btnAdd.frame.size.height/2
+        btnSignOut.layer.cornerRadius = btnSignOut.frame.size.height/2
         signOutBool.asObservable().subscribe() { _ in
             if self.signOutBool.value {
                 self.performSegue(withIdentifier: "ReturnOnFirstView", sender: self)

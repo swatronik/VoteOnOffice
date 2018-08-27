@@ -27,8 +27,9 @@ class SignInView: UIViewController {
         signIn.isEnabled = true
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        signIn.layer.cornerRadius = signIn.frame.size.height/2
         login.asObservable().subscribe() { _ in
             if self.login.value {
                 self.performSegue(withIdentifier: "MainViewSeque", sender: self)
@@ -36,7 +37,6 @@ class SignInView: UIViewController {
         }.disposed(by: disposeBag)
         signInViewModel.loginIsBool.asObservable().bind(to: login).disposed(by: disposeBag)
         signInViewModel.oldDataLoading()
-
         // Do any additional setup after loading the view, typically from a nib.
     }
     

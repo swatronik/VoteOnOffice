@@ -12,19 +12,19 @@ import RxCocoa
 import UIKit
 
 class VoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UITextView!
     @IBOutlet private weak var pieChart: PieChartView!
-
+    
     var UUID: String!
     
     let disposeBag = DisposeBag()
     let voteViewModel: VoteViewModel = VoteViewModel()
     var selectRow = Variable<Int>(-1)
     var arr = Variable<[[String: Any]]>([])
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -45,13 +45,13 @@ class VoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         voteViewModel.reloadViewData(UUID: UUID)
     }
-
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     func pieChartUpdate() {
         var arrEntry: [PieChartDataEntry] = []
         for ind in 0..<arr.value.count {
@@ -65,15 +65,17 @@ class VoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
         dataSet.entryLabelColor = UIColor.black
         dataSet.valueTextColor = UIColor.black
         let data = PieChartData(dataSet: dataSet)
+        pieChart.legend.textColor = UIColor.white
         pieChart.data = data
+        pieChart.holeColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
         pieChart.chartDescription?.text = ""
         pieChart.notifyDataSetChanged()
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.arr.value.count
     }
-
+    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: VoteCell = (tableView.dequeueReusableCell(withIdentifier: "cell") as? VoteCell) else {
             fatalError("Error Cell convert")
@@ -83,14 +85,16 @@ class VoteView: UIViewController, UITableViewDataSource, UITableViewDelegate {
         }
         cell.titleSet(value: titleCell)
         if indexPath.row == selectRow.value {
-            cell.backgroundColor = UIColor.green
-            } else {
-            cell.backgroundColor = UIColor.gray
+            cell.backgroundColor = UIColor.blue
+            cell.textLabel?.tintColor = UIColor.blue
+        } else {
+            cell.backgroundColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
+            cell.textLabel?.tintColor = UIColor(displayP3Red: 1, green: 1, blue: 1, alpha: 0)
         }
         return cell
     }
-
-
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         voteViewModel.tabOnCell(index: indexPath.row, UUID: UUID)
         tableView.reloadData()
